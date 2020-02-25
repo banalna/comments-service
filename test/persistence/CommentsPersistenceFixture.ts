@@ -9,7 +9,6 @@ import { PagingParams } from 'pip-services3-commons-node';
 import { CommentV1 } from '../../src/data/version1/CommentV1';
 import { CommentTypeV1 } from '../../src/data/version1/CommentTypeV1';
 import { ICommentsPersistence } from '../../src/persistence/ICommentsPersistence';
-import { isArray } from 'util';
 
 const COMMENT1: CommentV1 = {
 
