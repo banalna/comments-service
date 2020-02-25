@@ -1,6 +1,6 @@
 # comments-service
 
-For docker: "docker pull judaspriest999/comments-srvice"
+For docker: `docker pull judaspriest999/comments-srvice`
 
 ## Server
 
