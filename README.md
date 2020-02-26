@@ -8,7 +8,7 @@ Run `run.ps1` for a start server. Navigate to `http://localhost:8080`.
 
 ## Build
 
-Run `build.ps1` to build the build docker image.
+Run `build.ps1` to build docker image.
 
 ## Running tests
 
