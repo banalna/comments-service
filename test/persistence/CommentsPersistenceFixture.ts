@@ -255,7 +255,7 @@ export class CommentsPersistenceFixture {
                 this._persistence.getPageByFilter(
                     null,
                     FilterParams.fromTuples(
-                        'create_time', new Date(Date.UTC(2019, 7, 12, 21,32,10))
+                        'time_from', new Date(Date.UTC(2020, 3, 12, 21,32,10))
                     ),
                     new PagingParams(),
                     (err, page) => {

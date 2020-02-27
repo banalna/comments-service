@@ -26,9 +26,13 @@ export class CommentsMemoryPersistence
         let parent_id = filter.getAsNullableString('parent_id');
         let content = filter.getAsNullableString('content');
         let type = filter.getAsNullableString('type');
-        let create_time = filter.getAsObject('create_time');
-        if (typeof(create_time)=='string'){
-            create_time = new Date(Date.parse(create_time));
+        let time_from = filter.getAsObject('time_from');
+        if (typeof(time_from)=='string'){
+            time_from = new Date(Date.parse(time_from));
+        }
+        let time_to = filter.getAsObject('time_to');
+        if (typeof(time_to)=='string'){
+            time_to = new Date(Date.parse(time_to));
         }
         let author_id = filter.getAsNullableString('author_id');
         let authors_id = filter.getAsObject('authors_id');
@@ -47,8 +51,10 @@ export class CommentsMemoryPersistence
                 return false;
             if (type != null && item.type != type)
                 return false;
-            if (create_time != null && item.create_time.toString() != create_time.toString())
+            if (time_from != null && item.create_time.toString() >= time_from.toString())
                 return false;
+            if (time_to != null && item.create_time.toString() <= time_to.toString())
+                return false;    
             if (author_id != null && item.author_id != author_id)
                 return false;
             if (authors_id != null && _.indexOf(authors_id, item.author_id) < 0)

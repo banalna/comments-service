@@ -123,7 +123,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
                 'parent_id', comment.parent_id,
                 'author_id', comment.author_id,
                 'content', comment.content,
-                'create_time',comment.create_time.toUTCString
                 ), paging, 
             (err, page)=>{
                 comment = page.data[0];
@@ -144,7 +143,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
                 'parent_id', comment.parent_id,
                 'author_id', comment.author_id,
                 'content', comment.content,
-                'create_time',comment.create_time.toUTCString
                 ), paging, 
             (err, page)=>{
                 comment = page.data[0];
@@ -163,7 +161,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
                 'parent_id', comment.parent_id,
                 'author_id', comment.author_id,
                 'content', comment.content,
-                'create_time',comment.create_time.toUTCString
                 ), paging, 
             (err, page)=>{
                 comment = page.data[0];
@@ -181,7 +178,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
                 'parent_id', comment.parent_id,
                 'author_id', comment.author_id,
                 'content', comment.content,
-                'create_time',comment.create_time.toUTCString
                 ), paging, 
             (err, page)=>{
                 comment = page.data[0];
