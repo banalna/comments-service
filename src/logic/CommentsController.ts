@@ -98,8 +98,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
             comment.like_count = comment.like_count || 0;
             comment.dislike_count = comment.dislike_count || 0;
 
-            console.log(JSON.stringify(comment)+' :created')
-
             this._persistence.create(correlationId, comment, callback);
     }
 

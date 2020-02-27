@@ -178,7 +178,6 @@ suite('CommentsHttpServiceV1', () => {
                         assert.lengthOf(page.data, 3);
 
                         comment1 = page.data[0];
-                        console.log('COMMENT1' + JSON.stringify(comment1));
 
                         callback();
                     }
@@ -272,6 +271,82 @@ suite('CommentsHttpServiceV1', () => {
                     }
                 )
             }
+        ], done);
+    });
+
+    test('Test likes/dislikes/reports', (done) => {
+
+        let comment1: CommentV1;
+
+        async.series([
+            // Create the first comment
+            (callback) => {
+                rest.post('/v1/comments/create_comment',
+                    {
+                        comment: COMMENT1
+                    },
+                    (err, req, res, comment) => {
+                        assert.isNull(err);
+                        assert.isObject(comment);
+                        assert.equal(COMMENT1.parent_id, comment.parent_id);
+                        assert.equal(COMMENT1.content, comment.content);
+                        assert.equal(COMMENT1.author_id, comment.author_id);
+                        // assert.equal(COMMENT1.create_time.toUTCString(), comment.create_time.toUTCString());
+                        assert.equal(COMMENT1.like_count, comment.like_count);
+                        assert.equal(COMMENT1.dislike_count, comment.dislike_count);
+
+                        callback();
+                    }
+                );
+            },
+            // Set one like
+            (callback) => {
+                rest.post('/v1/comments/like_comment',
+                    {
+                        comment: COMMENT1
+                    },
+                    (err, req, res, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.like_count, COMMENT1.like_count + 1);
+
+                        callback();
+                    }
+                )
+            },
+             // Set one dislike
+            (callback) => {
+                rest.post('/v1/comments/dislike_comment',
+                    {
+                        comment: COMMENT1
+                    },
+                    (err, req, res, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.dislike_count, COMMENT1.dislike_count + 1);
+
+                        callback();
+                    }
+                )
+            },
+            // Send one report
+            (callback) => {
+                rest.post('/v1/comments/report_comment',
+                    {
+                        comment: COMMENT1
+                    },
+                    (err, req, res, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.report_count, COMMENT1.report_count + 1);
+
+                        callback();
+                    }
+                )
+            },
         ], done);
     });
 
