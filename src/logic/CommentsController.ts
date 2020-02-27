@@ -114,6 +114,27 @@ export class CommentsController implements ICommentsController, IConfigurable, I
             this._persistence.deleteById(correlationId, id, callback);
     }
 
+    public archiveComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void {
+            
+            let paging = new PagingParams();
+            this._persistence.getPageByFilter(correlationId, FilterParams.fromTuples(
+                'id', comment.id,
+                'parent_id', comment.parent_id,
+                'author_id', comment.author_id,
+                'content', comment.content,
+                'create_time',comment.create_time.toUTCString
+                ), paging, 
+            (err, page)=>{
+                comment = page.data[0];
+                if (comment.type != CommentTypeV1.Archived){
+                    comment.archive_time = new Date();
+                    comment.type = CommentTypeV1.Archived;
+                }
+                this._persistence.update(correlationId, comment, callback);
+            });
+    }
+
     public likeComment(correlationId: string, comment: CommentV1,
         callback: (err: any, comment: CommentV1) => void): void {
             
@@ -131,8 +152,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
             
                 this._persistence.update(correlationId, comment, callback);
             });
-
-            this._persistence.update(correlationId, comment, callback);
     }
 
     public dislikeComment(correlationId: string, comment: CommentV1,
@@ -152,8 +171,6 @@ export class CommentsController implements ICommentsController, IConfigurable, I
             
                 this._persistence.update(correlationId, comment, callback);
             });
-
-            this._persistence.update(correlationId, comment, callback);
     }
 
     public reportComment(correlationId: string, comment: CommentV1,
@@ -172,7 +189,7 @@ export class CommentsController implements ICommentsController, IConfigurable, I
             
                 this._persistence.update(correlationId, comment, callback);
             });
-            
+
     }
 
 }

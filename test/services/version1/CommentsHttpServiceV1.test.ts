@@ -274,7 +274,7 @@ suite('CommentsHttpServiceV1', () => {
         ], done);
     });
 
-    test('Test likes/dislikes/reports comments', (done) => {
+    test('Test likes, dislikes, reports and archiving comments', (done) => {
 
         let comment1: CommentV1;
 
@@ -343,6 +343,23 @@ suite('CommentsHttpServiceV1', () => {
                         assert.isObject(comment);
                         assert.equal(comment.report_count, COMMENT1.report_count + 1);
 
+                        callback();
+                    }
+                )
+            },
+            // Archive comment
+            (callback) => {
+                rest.post('/v1/comments/archive_comment',
+                    {
+                        comment: COMMENT1
+                    },
+                    (err, req, res, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.type, CommentTypeV1.Archived);
+                        assert.isNotNull(comment.archive_time);
+                        
                         callback();
                     }
                 )

@@ -77,6 +77,15 @@ export class CommentsDirectClientV1 extends DirectClient<ICommentsController> im
         }); 
     }
 
+    public archiveComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void {
+        let timing = this.instrument(correlationId, 'comments.archive_comment');
+        this._controller.likeComment(correlationId, comment, (err, comment) => {
+            timing.endTiming();
+            callback(err, comment);
+        }); 
+    }
+
     public likeComment(correlationId: string, comment: CommentV1,
         callback: (err: any, comment: CommentV1) => void): void {
         let timing = this.instrument(correlationId, 'comments.like_comment');

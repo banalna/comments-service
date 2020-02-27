@@ -26,6 +26,9 @@ export interface ICommentsController {
     deleteCommentById(correlationId: string, id: string,
         callback: (err: any, comment: CommentV1) => void): void;
 
+    archiveComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void;
+
     likeComment(correlationId: string, comment: CommentV1,
         callback: (err: any, comment: CommentV1) => void): void;
     

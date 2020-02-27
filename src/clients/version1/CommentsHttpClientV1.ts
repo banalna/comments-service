@@ -94,6 +94,19 @@ export class CommentsHttpClientV1 extends CommandableHttpClient implements IComm
         );
     }
 
+    public archiveComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void {
+        this.callCommand(
+            'archive_comment',
+            correlationId,
+            {
+                comment: comment
+            },
+            callback
+        );    
+    }
+
+
     public likeComment(correlationId: string, comment: CommentV1,
         callback: (err: any, comment: CommentV1) => void): void {
         this.callCommand(

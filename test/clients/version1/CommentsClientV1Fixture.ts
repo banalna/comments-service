@@ -344,6 +344,21 @@ export class CommentsClientV1Fixture {
                     }
                 )
             },
+            // Archive comment
+            (callback) => {
+                this._client.archiveComment(
+                    null, COMMENT1,
+                    (err, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.type, CommentTypeV1.Archived);
+                        assert.isNotNull(comment.archive_time);
+
+                        callback();
+                    }
+                )
+            },
         ], done);
     }
 }

@@ -29,6 +29,7 @@ export class CommentsCommandSet extends CommandSet {
         this.addCommand(this.makeLikeCommentCommand());
         this.addCommand(this.makeDislikeCommentCommand());
         this.addCommand(this.makeReportCommentCommand());
+        this.addCommand(this.makeArchiveCommentCommand());
     }
 
     private makeGetCommentsCommand(): ICommand {
@@ -106,6 +107,18 @@ export class CommentsCommandSet extends CommandSet {
             }
         );
     }
+
+    private makeArchiveCommentCommand(): ICommand {
+        return new Command(
+            'archive_comment',
+            new ObjectSchema(true)
+                .withRequiredProperty('comment', new CommentV1Schema()),
+            (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
+                let comment = args.getAsObject('comment');
+                this._controller.archiveComment(correlationId, comment, callback);
+            }
+        );
+    }   
     
     private makeLikeCommentCommand(): ICommand {
         return new Command(
