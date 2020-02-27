@@ -280,5 +280,71 @@ export class CommentsClientV1Fixture {
             },
         ], done);
     }
+
+    public testLikesDislikesReports(done) {
+        async.series([
+            // Create the first comment
+            (callback) => {
+                this._client.createComment(
+                    null,
+                    COMMENT1,
+                    (err, comment) => {
+                        assert.isNull(err);
+                        assert.isObject(comment);
+                        assert.equal(COMMENT1.parent_id, comment.parent_id);
+                        assert.equal(COMMENT1.content, comment.content);
+                        assert.equal(COMMENT1.author_id, comment.author_id);
+                        // assert.equal(COMMENT1.create_time.toUTCString(), comment.create_time.toUTCString());
+                        assert.equal(COMMENT1.like_count, comment.like_count);
+                        assert.equal(COMMENT1.dislike_count, comment.dislike_count);
+
+                        callback();
+                    }
+                );
+            },
+            // Set one like
+            (callback) => {
+                this._client.likeComment(
+                    null, COMMENT1,
+                    (err, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.like_count, COMMENT1.like_count + 1);
+
+                        callback();
+                    }
+                )
+            },
+            // Set one dislike
+            (callback) => {
+                this._client.dislikeComment(
+                    null, COMMENT1,
+                    (err, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.dislike_count, COMMENT1.dislike_count + 1);
+
+                        callback();
+                    }
+                )
+            },
+            // Send one report
+            (callback) => {
+                this._client.reportComment(
+                    null, COMMENT1,
+                    (err, comment) => {
+                        assert.isNull(err);
+
+                        assert.isObject(comment);
+                        assert.equal(comment.report_count, COMMENT1.report_count + 1);
+
+                        callback();
+                    }
+                )
+            },
+        ], done);
+    }
 }
 

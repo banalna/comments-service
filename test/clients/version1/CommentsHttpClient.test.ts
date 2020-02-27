@@ -79,4 +79,7 @@ suite('CommentsHttpClientV1', () => {
         fixture.testCalculateComments(done);
     });
 
+    test('Test likes/dislikes/reports comment', (done) => {
+        fixture.testLikesDislikesReports(done);
+    });
 });

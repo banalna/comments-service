@@ -274,7 +274,7 @@ suite('CommentsHttpServiceV1', () => {
         ], done);
     });
 
-    test('Test likes/dislikes/reports', (done) => {
+    test('Test likes/dislikes/reports comments', (done) => {
 
         let comment1: CommentV1;
 
