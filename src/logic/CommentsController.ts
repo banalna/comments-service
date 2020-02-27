@@ -95,12 +95,17 @@ export class CommentsController implements ICommentsController, IConfigurable, I
         callback: (err: any, comment: CommentV1) => void): void {
             comment.id = comment.id || IdGenerator.nextLong();
             comment.type = comment.type || CommentTypeV1.Active;
+            comment.like_count = comment.like_count || 0;
+            comment.dislike_count = comment.dislike_count || 0;
+
+            console.log(JSON.stringify(comment)+' :created')
 
             this._persistence.create(correlationId, comment, callback);
     }
 
     public updateComment(correlationId: string, comment: CommentV1,
         callback: (err: any, comment: CommentV1) => void): void {
+            comment.id = comment.id || IdGenerator.nextLong();
             comment.type = comment.type || CommentTypeV1.Active;
 
             this._persistence.update(correlationId, comment, callback);
@@ -109,6 +114,67 @@ export class CommentsController implements ICommentsController, IConfigurable, I
     public deleteCommentById(correlationId: string, id: string,
         callback: (err: any, comment: CommentV1) => void): void {
             this._persistence.deleteById(correlationId, id, callback);
+    }
+
+    public likeComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void {
+            
+            let paging = new PagingParams();
+            this._persistence.getPageByFilter(correlationId, FilterParams.fromTuples(
+                'id', comment.id,
+                'parent_id', comment.parent_id,
+                'author_id', comment.author_id,
+                'content', comment.content,
+                'create_time',comment.create_time.toUTCString
+                ), paging, 
+            (err, page)=>{
+                comment = page.data[0];
+                comment.like_count = (comment.like_count == null) ? comment.like_count = 1 : comment.like_count + 1;
+            
+                this._persistence.update(correlationId, comment, callback);
+            });
+
+            this._persistence.update(correlationId, comment, callback);
+    }
+
+    public dislikeComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void {
+            
+            let paging = new PagingParams();
+            this._persistence.getPageByFilter(correlationId, FilterParams.fromTuples(
+                'id', comment.id,
+                'parent_id', comment.parent_id,
+                'author_id', comment.author_id,
+                'content', comment.content,
+                'create_time',comment.create_time.toUTCString
+                ), paging, 
+            (err, page)=>{
+                comment = page.data[0];
+                comment.dislike_count = (comment.dislike_count == null) ? comment.dislike_count = 1 : comment.dislike_count + 1;
+            
+                this._persistence.update(correlationId, comment, callback);
+            });
+
+            this._persistence.update(correlationId, comment, callback);
+    }
+
+    public reportComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void {
+            let paging = new PagingParams();
+            this._persistence.getPageByFilter(correlationId, FilterParams.fromTuples(
+                'id', comment.id,
+                'parent_id', comment.parent_id,
+                'author_id', comment.author_id,
+                'content', comment.content,
+                'create_time',comment.create_time.toUTCString
+                ), paging, 
+            (err, page)=>{
+                comment = page.data[0];
+                comment.report_count = (comment.report_count == null) ? comment.report_count = 1 : comment.report_count + 1;
+            
+                this._persistence.update(correlationId, comment, callback);
+            });
+            
     }
 
 }

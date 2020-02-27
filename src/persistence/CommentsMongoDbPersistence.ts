@@ -36,7 +36,11 @@ export class CommentsMongoDbPersistence
         if (content != null)
             criteria.push({ content: content });
 
-        let create_time = filter.getAsNullableString('create_time');
+        let create_time = filter.getAsObject('create_time');
+        
+        if (typeof(create_time)=='string'){
+            create_time = new Date(Date.parse(create_time));
+        }
         if (create_time != null) {
             criteria.push({ create_time: create_time });
         }

@@ -41,4 +41,19 @@ export class CommentsNullClientV1 implements ICommentsClientV1 {
         callback: (err: any, comment: CommentV1) => void): void{
             callback(null, null);
         };
+
+     public likeComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void{
+            callback(null, null);
+        };
+
+     public dislikeComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void{
+            callback(null, null);
+        };
+
+     public reportComment(correlationId: string, comment: CommentV1,
+        callback: (err: any, comment: CommentV1) => void): void{
+            callback(null, null);
+        };
 }

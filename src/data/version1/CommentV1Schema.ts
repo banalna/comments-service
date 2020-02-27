@@ -11,12 +11,13 @@ export class CommentV1Schema extends ObjectSchema {
         this.withRequiredProperty('parent_id', TypeCode.String);
         this.withRequiredProperty('content', TypeCode.String);
         this.withRequiredProperty('author_id',TypeCode.String );
-        this.withRequiredProperty('create_time', TypeCode.String);
-        this.withOptionalProperty('update_time', TypeCode.String);
-        this.withRequiredProperty('like_count', TypeCode.Integer);
-        this.withRequiredProperty('dislike_count', TypeCode.Integer);
+        this.withRequiredProperty('create_time', null);
+        this.withOptionalProperty('update_time', null);
+        this.withOptionalProperty('like_count', TypeCode.Integer);
+        this.withOptionalProperty('dislike_count', TypeCode.Integer);
         this.withOptionalProperty('type', TypeCode.String);
-        this.withOptionalProperty('archive_time', TypeCode.String);
+        this.withOptionalProperty('archive_time', null);
+        this.withOptionalProperty('report_count', TypeCode.Integer);
 
     }
 

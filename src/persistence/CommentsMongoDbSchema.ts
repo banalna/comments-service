@@ -10,12 +10,13 @@ export let CommentsMongoDbSchema = function(collection?: string) {
             parent_id: {type: String, required: true},
             content: {type: String, required: true},
             author_id: {type: String, required: true},
-            create_time: {type: String, required: true},
-            update_time: {type: String, required: false},
+            create_time: {type: Date, required: true},
+            update_time: {type: Date, required: false},
             like_count: {type: Number, required: true},
             dislike_count: {type: Number, required: true},
             type: {type: String, required: false},
-            archive_time: {type: String, required: false}
+            archive_time: {type: Date, required: false},
+            report_count: {type: Number, required: false}
         },
         {
             collection: collection,

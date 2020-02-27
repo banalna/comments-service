@@ -75,8 +75,8 @@ suite('CommentsHttpClientV1', () => {
         fixture.testCrudOperations(done);
     });
 
-    test('Calculate Position', (done) => {
-        fixture.testCalculatePosition(done);
+    test('Calculate Comments', (done) => {
+        fixture.testCalculateComments(done);
     });
 
 });

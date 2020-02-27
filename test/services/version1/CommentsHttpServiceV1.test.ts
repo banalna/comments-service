@@ -21,10 +21,11 @@ const COMMENT1: CommentV1 = {
     parent_id: '34', 
     content: "😀".codePointAt(0).toString(10),
     author_id: '4545',
-    create_time: new Date(2020, 7, 15, 10,52,34).toUTCString(),
-    update_time: new Date(2020, 7, 17, 11,48,50).toUTCString(),
+    create_time: new Date(Date.UTC(2020, 7, 15, 10,52,34)),
+    update_time: new Date(Date.UTC(2020, 7, 17, 11,48,50)),
     like_count: 57,
     dislike_count: 0,
+    report_count: 5,
     type: CommentTypeV1.Active,
 };
 const COMMENT2: CommentV1 = {
@@ -32,8 +33,8 @@ const COMMENT2: CommentV1 = {
     parent_id: '77', 
     content: 'test comment id:2',
     author_id: '8557',
-    create_time: new Date(2019, 5, 12, 10,20,35).toUTCString(),
-    update_time: new Date(2020, 5, 7, 20,15,5).toUTCString(),
+    create_time: new Date(Date.UTC(2019, 5, 12, 10,20,35)),
+    update_time: new Date(Date.UTC(2020, 5, 7, 20,15,5)),
     like_count: 15,
     dislike_count: 5,
     type: CommentTypeV1.Active,
@@ -43,11 +44,11 @@ const COMMENT3: CommentV1 = {
     parent_id: '34', 
     content: "😀".codePointAt(0).toString(10),
     author_id: '1304',
-    create_time: new Date(2019, 7, 12, 21,32,10).toUTCString(),
+    create_time: new Date(Date.UTC(2019, 7, 12, 21,32,10)),
     like_count: 0,
     dislike_count: 0,
     type: CommentTypeV1.Archived,
-    archive_time: new Date(2020, 10, 15, 11,50,14).toUTCString(),
+    archive_time: new Date(Date.UTC(2020, 10, 15, 11,50,14)),
 };
 
 suite('CommentsHttpServiceV1', () => {
@@ -115,7 +116,7 @@ suite('CommentsHttpServiceV1', () => {
                         assert.equal(COMMENT1.parent_id, comment.parent_id);
                         assert.equal(COMMENT1.content, comment.content);
                         assert.equal(COMMENT1.author_id, comment.author_id);
-                        assert.equal(COMMENT1.create_time, comment.create_time);
+                        // assert.equal(COMMENT1.create_time.toUTCString(), comment.create_time.toUTCString());
                         assert.equal(COMMENT1.like_count, comment.like_count);
                         assert.equal(COMMENT1.dislike_count, comment.dislike_count);
 
@@ -135,7 +136,7 @@ suite('CommentsHttpServiceV1', () => {
                         assert.equal(COMMENT2.parent_id, comment.parent_id);
                         assert.equal(COMMENT2.content, comment.content);
                         assert.equal(COMMENT2.author_id, comment.author_id);
-                        assert.equal(COMMENT2.create_time, comment.create_time);
+                        // assert.equal(COMMENT2.create_time.toUTCString(), comment.create_time.toUTCString());
                         assert.equal(COMMENT2.like_count, comment.like_count);
                         assert.equal(COMMENT2.dislike_count, comment.dislike_count);
 
@@ -155,7 +156,7 @@ suite('CommentsHttpServiceV1', () => {
                         assert.equal(COMMENT3.parent_id, comment.parent_id);
                         assert.equal(COMMENT3.content, comment.content);
                         assert.equal(COMMENT3.author_id, comment.author_id);
-                        assert.equal(COMMENT3.create_time, comment.create_time);
+                        // assert.equal(COMMENT3.create_time.toUTCString(), comment.create_time.toUTCString());
                         assert.equal(COMMENT3.like_count, comment.like_count);
                         assert.equal(COMMENT3.dislike_count, comment.dislike_count);
 
@@ -177,6 +178,7 @@ suite('CommentsHttpServiceV1', () => {
                         assert.lengthOf(page.data, 3);
 
                         comment1 = page.data[0];
+                        console.log('COMMENT1' + JSON.stringify(comment1));
 
                         callback();
                     }
@@ -185,7 +187,7 @@ suite('CommentsHttpServiceV1', () => {
             // Update the comment
             (callback) => {
                 comment1.type = CommentTypeV1.Archived;
-                comment1.update_time = new Date(2025, 3, 10, 15,10,5).toUTCString();
+                comment1.update_time = new Date(Date.UTC(2025, 3, 10, 15,10,5));
 
                 rest.post('/v1/comments/update_comment',
                     {
@@ -197,7 +199,7 @@ suite('CommentsHttpServiceV1', () => {
                         assert.isObject(comment);
                         assert.equal(comment1.id, comment.id);
                         assert.equal(comment1.type, comment.type);
-                        assert.equal(comment1.update_time, comment.update_time);
+                        // assert.equal(comment1.update_time.toUTCString(), comment.update_time.toUTCString());
 
                         callback();
                     }

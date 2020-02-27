@@ -26,6 +26,9 @@ export class CommentsCommandSet extends CommandSet {
         this.addCommand(this.makeCreateCommentCommand());
         this.addCommand(this.makeUpdateCommentCommand());
         this.addCommand(this.makeDeleteCommentByIdCommand());
+        this.addCommand(this.makeLikeCommentCommand());
+        this.addCommand(this.makeDislikeCommentCommand());
+        this.addCommand(this.makeReportCommentCommand());
     }
 
     private makeGetCommentsCommand(): ICommand {
@@ -100,6 +103,42 @@ export class CommentsCommandSet extends CommandSet {
             (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
                 let comment = args.getAsObject('comment');
                 this._controller.updateComment(correlationId, comment, callback);
+            }
+        );
+    }
+    
+    private makeLikeCommentCommand(): ICommand {
+        return new Command(
+            'like_comment',
+            new ObjectSchema(true)
+                .withRequiredProperty('comment', new CommentV1Schema()),
+            (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
+                let comment = args.getAsObject('comment');
+                this._controller.likeComment(correlationId, comment, callback);
+            }
+        );
+    }   
+
+    private makeDislikeCommentCommand(): ICommand {
+        return new Command(
+            'dislike_comment',
+            new ObjectSchema(true)
+                .withRequiredProperty('comment', new CommentV1Schema()),
+            (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
+                let comment = args.getAsObject('comment');
+                this._controller.dislikeComment(correlationId, comment, callback);
+            }
+        );
+    }   
+
+    private makeReportCommentCommand(): ICommand {
+        return new Command(
+            'report_comment',
+            new ObjectSchema(true)
+                .withRequiredProperty('comment', new CommentV1Schema()),
+            (correlationId: string, args: Parameters, callback: (err: any, result: any) => void) => {
+                let comment = args.getAsObject('comment');
+                this._controller.reportComment(correlationId, comment, callback);
             }
         );
     }   

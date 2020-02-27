@@ -45,7 +45,7 @@ suite('CommentsDirectClientV1', () => {
         fixture.testCrudOperations(done);
     });
 
-    test('Calculate Positions', (done) => {
-        fixture.testCalculatePosition(done);
+    test('Calculate Comments', (done) => {
+        fixture.testCalculateComments(done);
     });
 });
