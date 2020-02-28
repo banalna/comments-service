@@ -67,7 +67,6 @@ export class CommentsMongoDbPersistence
         if (_.isArray(authors_id))
             criteria.push({ author_id: { $in: authors_id } });
 
-        console.log(JSON.stringify(criteria));
         return criteria.length > 0 ? { $and: criteria } : null;
     }
 
