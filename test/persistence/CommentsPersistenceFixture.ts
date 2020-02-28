@@ -255,12 +255,13 @@ export class CommentsPersistenceFixture {
                 this._persistence.getPageByFilter(
                     null,
                     FilterParams.fromTuples(
-                        'time_from', new Date(Date.UTC(2020, 3, 12, 21,32,10))
+                        'time_from', new Date(Date.UTC(2018, 7, 12, 21,32,10)),
+                        'time_to', new Date(Date.UTC(2020, 7, 12, 21,32,10))
                     ),
                     new PagingParams(),
                     (err, page) => {
                         assert.isNull(err);
-                        assert.lengthOf(page.data, 1);
+                        assert.lengthOf(page.data, 2);
 
                         callback();
                     }

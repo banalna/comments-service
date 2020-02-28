@@ -12,8 +12,8 @@ export let CommentsMongoDbSchema = function(collection?: string) {
             author_id: {type: String, required: true},
             create_time: {type: Date, required: true},
             update_time: {type: Date, required: false},
-            like_count: {type: Number, required: true},
-            dislike_count: {type: Number, required: true},
+            like_count: {type: Number, required: false},
+            dislike_count: {type: Number, required: false},
             type: {type: String, required: false},
             archive_time: {type: Date, required: false},
             report_count: {type: Number, required: false}

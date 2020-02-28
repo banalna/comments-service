@@ -43,6 +43,9 @@ export class CommentsMemoryPersistence
 
 
         return (item) => {
+            
+            item.create_time = new Date(item.create_time)
+
             if (id != null && item.id != id)
                 return false;
             if (parent_id != null && item.parent_id != parent_id)
@@ -51,9 +54,9 @@ export class CommentsMemoryPersistence
                 return false;
             if (type != null && item.type != type)
                 return false;
-            if (time_from != null && item.create_time.toString() >= time_from.toString())
+            if (time_from != null && item.create_time <= time_from)
                 return false;
-            if (time_to != null && item.create_time.toString() <= time_to.toString())
+            if (time_to != null && item.create_time >= time_to)
                 return false;    
             if (author_id != null && item.author_id != author_id)
                 return false;

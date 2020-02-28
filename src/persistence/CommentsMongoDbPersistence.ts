@@ -36,13 +36,24 @@ export class CommentsMongoDbPersistence
         if (content != null)
             criteria.push({ content: content });
 
-        let create_time = filter.getAsObject('create_time');
-        
-        if (typeof(create_time)=='string'){
-            create_time = new Date(Date.parse(create_time));
+        let time_from = filter.getAsObject('time_from');
+        if (typeof(time_from)=='string'){
+            time_from = new Date(Date.parse(time_from));
         }
-        if (create_time != null) {
-            criteria.push({ create_time: create_time });
+
+        let time_to = filter.getAsObject('time_to');
+        if (typeof(time_to)=='string'){
+            time_to = new Date(Date.parse(time_to));
+        }
+        
+        if (time_from != null && time_to != null) {
+            criteria.push({"create_time": {$gte: time_from, $lte: time_to}});;
+        }
+        if (time_to != null) {
+            criteria.push({ "create_time": {$lte: time_to} });
+        }
+        if (time_from != null) {
+            criteria.push({ "create_time": {$gte: time_from} });
         }
 
         let author_id = filter.getAsNullableString('author_id');
@@ -56,6 +67,7 @@ export class CommentsMongoDbPersistence
         if (_.isArray(authors_id))
             criteria.push({ author_id: { $in: authors_id } });
 
+        console.log(JSON.stringify(criteria));
         return criteria.length > 0 ? { $and: criteria } : null;
     }
 
